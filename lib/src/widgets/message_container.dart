@@ -147,7 +147,7 @@ class MessageContainer extends StatelessWidget {
                 children: messageButtonsBuilder(message),
                 mainAxisSize: MainAxisSize.min,
               ),
-            if (!noTimeStamp){
+            if (noTimeStamp == false) {
               if (messageTimeBuilder != null)
                 messageTimeBuilder(
                   timeFormat != null
