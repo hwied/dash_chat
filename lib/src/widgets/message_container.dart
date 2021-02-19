@@ -93,6 +93,57 @@ class MessageContainer extends StatelessWidget {
         BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
             maxWidth: MediaQuery.of(context).size.width);
+    messageWidgets = <Widget>[
+      if (this.textBeforeImage)
+        _buildMessageText()
+      else
+        _buildMessageImage(),
+      if (this.textBeforeImage)
+        _buildMessageImage()
+      else
+        _buildMessageText(),
+      if (buttons != null)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment:
+          isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: buttons,
+        )
+      else if (messageButtonsBuilder != null)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment:
+          isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: messageButtonsBuilder(message),
+          mainAxisSize: MainAxisSize.min,
+        ),
+    ];
+    if (noTimeStamp == false) {
+      if (messageTimeBuilder != null) {
+        messageWidgets = [...messageWidgets, messageTimeBuilder(
+          timeFormat != null
+              ? timeFormat.format(message.createdAt)
+              : DateFormat('HH:mm:ss').format(message.createdAt),
+          message,
+        )];
+      } else {
+        messageWidgets = [...messageWidgets, Padding(
+          padding: EdgeInsets.only(top: 5.0),
+          child: Text(
+            timeFormat != null
+                ? timeFormat.format(message.createdAt)
+                : DateFormat('HH:mm:ss').format(message.createdAt),
+            style: TextStyle(
+              fontSize: 10.0,
+              color: message.user.color != null
+                  ? message.user.color
+                  : isUser ? Colors.white70 : Colors.black87,
+            ),
+          ),
+        )];
+      }
+    }
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: constraints.maxWidth * 0.8,
@@ -122,60 +173,7 @@ class MessageContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment:
               isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: <Widget>[
-            if (this.textBeforeImage)
-              _buildMessageText()
-            else
-              _buildMessageImage(),
-            if (this.textBeforeImage)
-              _buildMessageImage()
-            else
-              _buildMessageText(),
-            if (buttons != null)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment:
-                    isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: buttons,
-              )
-            else if (messageButtonsBuilder != null)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment:
-                    isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: messageButtonsBuilder(message),
-                mainAxisSize: MainAxisSize.min,
-              ),
-            if (noTimeStamp == false)
-              if (messageTimeBuilder != null)
-                messageTimeBuilder(
-                  timeFormat != null
-                      ? timeFormat.format(message.createdAt)
-                      : DateFormat('HH:mm:ss').format(message.createdAt),
-                  message,
-                )
-              else
-                Padding(
-                  padding: EdgeInsets.only(top: 5.0),
-                  child: Text(
-                    timeFormat != null
-                        ? timeFormat.format(message.createdAt)
-                        : DateFormat('HH:mm:ss').format(message.createdAt),
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: message.user.color != null
-                          ? message.user.color
-                          : isUser ? Colors.white70 : Colors.black87,
-                    ),
-                  ),
-                )
-            else
-              Padding(
-                padding: EdgeInsets.only(top: 5.0),
-                child: Container()
-              )
-          ],
+          children: messageWidgets
         ),
       ),
     );
