@@ -121,14 +121,14 @@ class MessageContainer extends StatelessWidget {
     ];
     if (noTimeStamp == false) {
       if (messageTimeBuilder != null) {
-        messageWidgets = [...messageWidgets, messageTimeBuilder(
+        messageWidgets.add(messageTimeBuilder(
           timeFormat != null
               ? timeFormat.format(message.createdAt)
               : DateFormat('HH:mm:ss').format(message.createdAt),
           message,
-        )];
+        ));
       } else {
-        messageWidgets = [...messageWidgets, Padding(
+        messageWidgets.add(Padding(
           padding: EdgeInsets.only(top: 5.0),
           child: Text(
             timeFormat != null
@@ -141,7 +141,7 @@ class MessageContainer extends StatelessWidget {
                   : isUser ? Colors.white70 : Colors.black87,
             ),
           ),
-        )];
+        ));
       }
     }
     return ConstrainedBox(
