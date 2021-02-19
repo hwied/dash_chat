@@ -93,7 +93,7 @@ class MessageContainer extends StatelessWidget {
         BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
             maxWidth: MediaQuery.of(context).size.width);
-    messageWidgets = <Widget>[
+    var messageWidgets = <Widget>[
       if (this.textBeforeImage)
         _buildMessageText()
       else
