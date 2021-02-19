@@ -171,7 +171,10 @@ class MessageContainer extends StatelessWidget {
                   ),
                 )
             else
-              Container()
+              Padding(
+                padding: EdgeInsets.only(top: 5.0),
+                child: Container()
+              )
           ],
         ),
       ),
