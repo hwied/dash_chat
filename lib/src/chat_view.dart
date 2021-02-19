@@ -88,6 +88,8 @@ class DashChat extends StatefulWidget {
   /// defaults to `HH:mm:ss`.
   final DateFormat timeFormat;
 
+  final bool noTimeStamp;
+
   /// Should the user avatar be shown defaults to false and will not
   /// show the user avatar.
   final bool showUserAvatar;
@@ -326,6 +328,7 @@ class DashChat extends StatefulWidget {
     this.messageIdGenerator,
     this.dateFormat,
     this.timeFormat,
+    this.noTimeStamp = false,
     @required this.user,
     @required this.onSend,
     this.onLongPressAvatar,
@@ -497,6 +500,7 @@ class DashChatState extends State<DashChat> {
                     showuserAvatar: widget.showUserAvatar,
                     dateFormat: widget.dateFormat,
                     timeFormat: widget.timeFormat,
+                    noTimeStamp: widget.noTimeStamp,
                     inverted: widget.inverted,
                     showAvatarForEverMessage: widget.showAvatarForEveryMessage,
                     onLongPressAvatar: widget.onLongPressAvatar,

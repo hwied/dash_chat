@@ -12,6 +12,8 @@ class MessageContainer extends StatelessWidget {
   /// the default `HH:mm:ss`
   final DateFormat timeFormat;
 
+  final bool noTimeStamp;
+
   /// [messageTextBuilder] function takes a function with this
   /// structure [Widget Function(String)] to render the text inside
   /// the container.
@@ -70,6 +72,7 @@ class MessageContainer extends StatelessWidget {
   const MessageContainer({
     @required this.message,
     @required this.timeFormat,
+    this.noTimeStamp = false,
     this.constraints,
     this.messageImageBuilder,
     this.messageTextBuilder,
@@ -144,28 +147,30 @@ class MessageContainer extends StatelessWidget {
                 children: messageButtonsBuilder(message),
                 mainAxisSize: MainAxisSize.min,
               ),
-            if (messageTimeBuilder != null)
-              messageTimeBuilder(
-                timeFormat != null
-                    ? timeFormat.format(message.createdAt)
-                    : DateFormat('HH:mm:ss').format(message.createdAt),
-                message,
-              )
-            else
-              Padding(
-                padding: EdgeInsets.only(top: 5.0),
-                child: Text(
+            if (!noTimeStamp){
+              if (messageTimeBuilder != null)
+                messageTimeBuilder(
                   timeFormat != null
                       ? timeFormat.format(message.createdAt)
                       : DateFormat('HH:mm:ss').format(message.createdAt),
-                  style: TextStyle(
-                    fontSize: 10.0,
-                    color: message.user.color != null
-                        ? message.user.color
-                        : isUser ? Colors.white70 : Colors.black87,
+                  message,
+                )
+              else
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Text(
+                    timeFormat != null
+                        ? timeFormat.format(message.createdAt)
+                        : DateFormat('HH:mm:ss').format(message.createdAt),
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: message.user.color != null
+                          ? message.user.color
+                          : isUser ? Colors.white70 : Colors.black87,
+                    ),
                   ),
-                ),
-              )
+                )
+            }
           ],
         ),
       ),

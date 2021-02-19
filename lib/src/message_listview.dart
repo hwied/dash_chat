@@ -6,6 +6,7 @@ class MessageListView extends StatefulWidget {
   final bool showuserAvatar;
   final DateFormat dateFormat;
   final DateFormat timeFormat;
+  final bool noTimeStamp;
   final bool showAvatarForEverMessage;
   final Function(ChatUser) onPressAvatar;
   final Function(ChatUser) onLongPressAvatar;
@@ -54,6 +55,7 @@ class MessageListView extends StatefulWidget {
       this.showuserAvatar,
       this.dateFormat,
       this.timeFormat,
+      this.noTimeStamp = false,
       this.showAvatarForEverMessage,
       this.inverted,
       this.onLongPressAvatar,
@@ -176,7 +178,7 @@ class _MessageListViewState extends State<MessageListView> {
                     return Align(
                       child: Column(
                         children: <Widget>[
-                          if (showDate &&
+                          if (showDate && !widget.noTimeStamp &&
                               (!widget.inverted ||
                                   widget.messages.length == 1 ||
                                   (last && widget.inverted)))
@@ -271,6 +273,7 @@ class _MessageListViewState extends State<MessageListView> {
                                                       widget.user.uid,
                                               message: widget.messages[i],
                                               timeFormat: widget.timeFormat,
+                                              noTimeStamp: widget.noTimeStamp,
                                               messageImageBuilder:
                                                   widget.messageImageBuilder,
                                               messageTextBuilder:
