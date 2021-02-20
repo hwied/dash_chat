@@ -4,6 +4,7 @@ class MessageListView extends StatefulWidget {
   final List<ChatMessage> messages;
   final ChatUser user;
   final bool showuserAvatar;
+  final bool showOtherAvatar;
   final DateFormat dateFormat;
   final DateFormat timeFormat;
   final bool noTimeStamp;
