@@ -53,6 +53,7 @@ class MessageListView extends StatefulWidget {
       this.messages,
       this.user,
       this.showuserAvatar,
+      this.showOtherAvatar,
       this.dateFormat,
       this.timeFormat,
       this.noTimeStamp = false,
@@ -104,6 +105,9 @@ class _MessageListViewState extends State<MessageListView> {
   bool shouldShowAvatar(int index) {
     if (widget.showAvatarForEverMessage) {
       return true;
+    }
+    if (widget.showOtherAvatar) {
+      return false;
     }
     if (!widget.inverted && index + 1 < widget.messages.length) {
       return widget.messages[index + 1].user.uid !=

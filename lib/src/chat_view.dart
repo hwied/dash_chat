@@ -93,6 +93,7 @@ class DashChat extends StatefulWidget {
   /// Should the user avatar be shown defaults to false and will not
   /// show the user avatar.
   final bool showUserAvatar;
+  final bool showOtherAvatar;
 
   /// avatarBuilder will override the the default avatar which uses
   /// [CircleAvatar].
@@ -337,6 +338,7 @@ class DashChat extends StatefulWidget {
     this.avatarBuilder,
     this.showAvatarForEveryMessage = false,
     this.showUserAvatar = false,
+    this.showOtherAvatar = true,
     this.inverted = false,
     this.maxInputLength,
     this.parsePatterns = const <MatchText>[],
@@ -498,6 +500,7 @@ class DashChatState extends State<DashChat> {
                     user: widget.user,
                     messages: widget.messages,
                     showuserAvatar: widget.showUserAvatar,
+                    showOtherAvatar: widget.showOtherAvatar,
                     dateFormat: widget.dateFormat,
                     timeFormat: widget.timeFormat,
                     noTimeStamp: widget.noTimeStamp,
