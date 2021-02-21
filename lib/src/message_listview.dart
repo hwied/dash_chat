@@ -38,6 +38,9 @@ class MessageListView extends StatefulWidget {
   final bool textBeforeImage;
   final double avatarMaxSize;
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
+  final Function hasPrintedCallback;
+  final typingMsPerChar;
+  var messagesPrinted;
 
   MessageListView(
       {this.showLoadEarlierWidget,
@@ -78,6 +81,8 @@ class MessageListView extends StatefulWidget {
       this.messagePadding = const EdgeInsets.all(8.0),
       this.textBeforeImage = true,
       this.messageDecorationBuilder,
+      this.typingMsPerChar,
+      this.hasPrintedCallback,
       });
 
   @override
@@ -297,6 +302,8 @@ class _MessageListViewState extends State<MessageListView> {
                                                   widget.textBeforeImage,
                                               messageDecorationBuilder:
                                                   widget.messageDecorationBuilder,
+                                              hasPrintedCallback: widget.hasPrintedCallback,
+                                              typingMsPerChar: widget.typingMsPerChar,
                                             ),
                                           ),
                                   ),

@@ -279,6 +279,10 @@ class DashChat extends StatefulWidget {
   /// return BoxDecoration
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
 
+  final Function hasPrintedCallback;
+  final Function hasEverythingPrintedCallback;
+  final int typingMsPerChar;
+
   ScrollToBottomStyle scrollToBottomStyle;
 
   DashChat({
@@ -360,6 +364,9 @@ class DashChat extends StatefulWidget {
     this.messagePadding = const EdgeInsets.all(8.0),
     this.textBeforeImage = true,
     this.messageDecorationBuilder,
+    this.typingMsPerChar,
+    this.hasPrintedCallback,
+    this.hasEverythingPrintedCallback,
   }) : super(key: key) {
     this.scrollToBottomStyle = scrollToBottomStyle ?? new ScrollToBottomStyle();
   }
@@ -384,6 +391,18 @@ class DashChatState extends State<DashChat> {
   String get messageInput => _text;
   bool _initialLoad = true;
   Timer _timer;
+
+  var messagesPrinted;
+
+  void hasPrintedCallback() {
+    if (widget.messages.length > messagesPrinted.length)
+      setState(() {
+        messagesPrinted = [...messagesPrinted, widget.messages[messagesPrinted.length]];
+      });
+    else
+      widget.hasEverythingPrintedCallback();
+    widget.hasPrintedCallback();
+  }
 
   void onTextChange(String text) {
     if (visible) {
@@ -502,7 +521,7 @@ class DashChatState extends State<DashChat> {
                         ? widget.scrollController
                         : scrollController,
                     user: widget.user,
-                    messages: widget.messages,
+                    messages: messagesPrinted,
                     showuserAvatar: widget.showUserAvatar,
                     showOtherAvatar: widget.showOtherAvatar,
                     dateFormat: widget.dateFormat,
@@ -526,7 +545,9 @@ class DashChatState extends State<DashChat> {
                     visible: visible,
                     showLoadMore: showLoadMore,
                     messageButtonsBuilder: widget.messageButtonsBuilder,
-                    messageDecorationBuilder: widget.messageDecorationBuilder
+                    messageDecorationBuilder: widget.messageDecorationBuilder,
+                    typingMsPerChar: widget.typingMsPerChar,
+                    hasPrintedCallback: widget.hasPrintedCallback,
                   ),
                   if (widget.messages.length != 0 &&
                       widget.messages.last.user.uid != widget.user.uid &&

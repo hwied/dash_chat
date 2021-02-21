@@ -34,6 +34,7 @@ class MessageContainer extends StatelessWidget {
   final BoxDecoration messageContainerDecoration;
 
   final int typingMsPerChar;
+  final Function hasPrintedCallback;
 
   /// Used to parse text to make it linkified text uses
   /// [flutter_parsed_text](https://pub.dev/packages/flutter_parsed_text)
@@ -71,7 +72,7 @@ class MessageContainer extends StatelessWidget {
   /// return BoxDecoration
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
 
-  const MessageContainer({
+  MessageContainer({
     @required this.message,
     @required this.timeFormat,
     this.noTimeStamp = false,
@@ -80,7 +81,8 @@ class MessageContainer extends StatelessWidget {
     this.messageTextBuilder,
     this.messageTimeBuilder,
     this.messageContainerDecoration,
-    this.typingMsPerChar = 10,
+    this.typingMsPerChar,
+    this.hasPrintedCallback,
     this.parsePatterns = const <MatchText>[],
     this.textBeforeImage = true,
     this.isUser,
@@ -89,6 +91,13 @@ class MessageContainer extends StatelessWidget {
     this.messagePadding = const EdgeInsets.all(8.0),
     this.messageDecorationBuilder,
   });
+
+  bool hasPrinted = false;
+  void _hasPrintedCallback() {
+    if (!hasPrinted)
+      hasPrinted = true;
+    hasPrintedCallback();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,10 +182,13 @@ class MessageContainer extends StatelessWidget {
         ),
         padding: messagePadding,
         child: FutureBuilder(
-          future: Future.delayed(Duration(milliseconds: msPerChar * message.text.length)),
+          future: Future.delayed(Duration(milliseconds: (typingMsPerChar == null ? 0 : typingMsPerChar) * message.text.length)),
           builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done)
+            if (snapshot.connectionState != ConnectionState.done) {
+              hasPrinted = false;
               return JumpingDotsProgressIndicator();
+            }
+            _hasPrintedCallback();
             return Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment:
