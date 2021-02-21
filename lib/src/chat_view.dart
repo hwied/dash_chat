@@ -392,7 +392,7 @@ class DashChatState extends State<DashChat> {
   bool _initialLoad = true;
   Timer _timer;
 
-  var messagesPrinted;
+  var messagesPrinted = [];
 
   void hasPrintedCallback() {
     if (widget.messages.length > messagesPrinted.length)
