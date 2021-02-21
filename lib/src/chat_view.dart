@@ -141,6 +141,9 @@ class DashChat extends StatefulWidget {
   /// show a "tying..." at the end.
   final Widget Function() chatFooterBuilder;
 
+  /// A Widget that provides input abilities
+  final Widget Function() inputWidgetBuilder;
+
   /// Main input length of the input text box defaulst to no limit.
   final int maxInputLength;
 
@@ -343,6 +346,7 @@ class DashChat extends StatefulWidget {
     this.maxInputLength,
     this.parsePatterns = const <MatchText>[],
     this.chatFooterBuilder,
+    this.inputWidgetBuilder,
     this.messageBuilder,
     this.inputFooterBuilder,
     this.sendButtonBuilder,
@@ -557,6 +561,8 @@ class DashChatState extends State<DashChat> {
                     ),
                   if (widget.chatFooterBuilder != null)
                     widget.chatFooterBuilder(),
+                  if (widget.inputWidgetBuilder != null)
+                    widget.inputWidgetBuilder(),
                   if (!widget.readOnly)
                     SafeArea(
                       child: ChatInputToolbar(
