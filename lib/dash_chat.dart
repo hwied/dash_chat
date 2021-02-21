@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter/animation.dart';
 
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:flutter_parsed_text/flutter_parsed_text.dart';
@@ -27,3 +28,4 @@ part 'src/widgets/message_container.dart';
 part 'src/widgets/quick_reply.dart';
 part 'src/widgets/scroll_to_bottom.dart';
 part 'src/widgets/load_earlier.dart';
+part 'src/widgets/jumping_dots.dart';

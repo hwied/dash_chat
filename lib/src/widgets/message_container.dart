@@ -33,6 +33,8 @@ class MessageContainer extends StatelessWidget {
   /// takes [BoxDecoration]
   final BoxDecoration messageContainerDecoration;
 
+  final int typingMsPerChar;
+
   /// Used to parse text to make it linkified text uses
   /// [flutter_parsed_text](https://pub.dev/packages/flutter_parsed_text)
   /// takes a list of [MatchText] in order to parse Email, phone, links
@@ -78,6 +80,7 @@ class MessageContainer extends StatelessWidget {
     this.messageTextBuilder,
     this.messageTimeBuilder,
     this.messageContainerDecoration,
+    this.typingMsPerChar = 10,
     this.parsePatterns = const <MatchText>[],
     this.textBeforeImage = true,
     this.isUser,
@@ -169,12 +172,19 @@ class MessageContainer extends StatelessWidget {
           bottom: 5.0,
         ),
         padding: messagePadding,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment:
-              isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: messageWidgets
-        ),
+        child: FutureBuilder(
+          future: Future.delayed(Duration(milliseconds: msPerChar * message.text.length)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done)
+              return JumpingDotsProgressIndicator();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment:
+                  isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: messageWidgets
+              );
+            }
+          )
       ),
     );
   }
