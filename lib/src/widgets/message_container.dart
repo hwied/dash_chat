@@ -35,6 +35,7 @@ class MessageContainer extends StatelessWidget {
 
   final int typingMsPerChar;
   final Function hasPrintedCallback;
+  final bool slowPrintOnlyForOtherUser;
 
   /// Used to parse text to make it linkified text uses
   /// [flutter_parsed_text](https://pub.dev/packages/flutter_parsed_text)
@@ -83,6 +84,7 @@ class MessageContainer extends StatelessWidget {
     this.messageContainerDecoration,
     this.typingMsPerChar,
     this.hasPrintedCallback,
+    this.slowPrintOnlyForOtherUser = false,
     this.parsePatterns = const <MatchText>[],
     this.textBeforeImage = true,
     this.isUser,
@@ -182,7 +184,8 @@ class MessageContainer extends StatelessWidget {
         ),
         padding: messagePadding,
         child: FutureBuilder(
-          future: Future.delayed(Duration(milliseconds: (typingMsPerChar == null ? 0 : typingMsPerChar) * message.text.length)),
+          future: Future.delayed(Duration(milliseconds:
+            (typingMsPerChar == null || (slowPrintOnlyForOtherUser && !isUser) ? 0 : typingMsPerChar) * message.text.length)),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               hasPrinted = false;
