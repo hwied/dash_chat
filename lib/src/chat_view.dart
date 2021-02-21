@@ -562,7 +562,7 @@ class DashChatState extends State<DashChat> {
                   if (widget.chatFooterBuilder != null)
                     widget.chatFooterBuilder(),
                   if (widget.inputWidgetBuilder != null)
-                    widget.inputWidgetBuilder(),
+                    SafeArea(child: widget.inputWidgetBuilder()),
                   if (!widget.readOnly)
                     SafeArea(
                       child: ChatInputToolbar(
