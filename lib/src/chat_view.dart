@@ -393,14 +393,18 @@ class DashChatState extends State<DashChat> {
   Timer _timer;
 
   List<ChatMessage> messagesPrinted = [];
+  bool isPrinting = false;
 
   void hasPrintedCallback() {
     if (widget.messages.length > messagesPrinted.length)
       setState(() {
         messagesPrinted = [...messagesPrinted, widget.messages[messagesPrinted.length]];
+        isPrinting = true;
       });
-    else
+    else {
       widget.hasEverythingPrintedCallback();
+      isPrinting = false;
+    }
     widget.hasPrintedCallback();
   }
 
@@ -490,6 +494,12 @@ class DashChatState extends State<DashChat> {
 
   @override
   Widget build(BuildContext context) {
+    if (messagesPrinted.length < widget.messages.length && isPrinting) {
+      setState(() {
+        messagesPrinted = [...messagesPrinted, widget.messages[messagesPrinted.length]];
+        isPrinting = true;
+      });
+    }
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth == double.infinity
