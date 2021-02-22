@@ -9,17 +9,17 @@ class MessageListView extends StatefulWidget {
   final DateFormat? timeFormat;
   final bool noTimeStamp;
   final bool? showAvatarForEverMessage;
-  final Function(ChatUser)? onPressAvatar;
-  final Function(ChatUser)? onLongPressAvatar;
+  final Function(ChatUser?)? onPressAvatar;
+  final Function(ChatUser?)? onLongPressAvatar;
   final bool? renderAvatarOnTop;
   final Function(ChatMessage)? onLongPressMessage;
   final bool? inverted;
-  final Widget Function(ChatUser)? avatarBuilder;
-  final Widget Function(ChatMessage)? messageBuilder;
-  final Widget Function(String, [ChatMessage])? messageTextBuilder;
-  final Widget Function(String, [ChatMessage])? messageImageBuilder;
-  final Widget Function(String, [ChatMessage])? messageTimeBuilder;
-  final Widget Function(String)? dateBuilder;
+  final Widget Function(ChatUser?)? avatarBuilder;
+  final Widget Function(ChatMessage?)? messageBuilder;
+  final Widget Function(String?, [ChatMessage?])? messageTextBuilder;
+  final Widget Function(String?, [ChatMessage?])? messageImageBuilder;
+  final Widget Function(String?, [ChatMessage?])? messageTimeBuilder;
+  final Widget Function(String?)? dateBuilder;
   final Widget Function()? renderMessageFooter;
   final BoxDecoration? messageContainerDecoration;
   // final List<MatchText> parsePatterns;
@@ -33,11 +33,11 @@ class MessageListView extends StatefulWidget {
   final Function? onLoadEarlier;
   final Function(bool)? defaultLoadCallback;
   final BoxConstraints? constraints;
-  final List<Widget> Function(ChatMessage)? messageButtonsBuilder;
+  final List<Widget> Function(ChatMessage?)? messageButtonsBuilder;
   final EdgeInsets messagePadding;
   final bool textBeforeImage;
   final double? avatarMaxSize;
-  final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
+  final BoxDecoration Function(ChatMessage?, bool?)? messageDecorationBuilder;
   final Widget? loadingWidget;
 
   MessageListView(

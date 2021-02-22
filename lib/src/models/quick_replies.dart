@@ -18,7 +18,7 @@ class QuickReplies {
     keepIt = json['keepIt'] != null ? json['keepIt'] : null;
 
     if (json['values'] != null) {
-      List<Reply> replies = List<Reply>();
+      List<Reply> replies = <Reply>[];
 
       for (var i = 0; i < json['values'].length; i++) {
         replies.add(Reply.fromJson(json['values'][i]));

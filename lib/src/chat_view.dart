@@ -97,7 +97,7 @@ class DashChat extends StatefulWidget {
 
   /// avatarBuilder will override the the default avatar which uses
   /// [CircleAvatar].
-  final Widget Function(ChatUser)? avatarBuilder;
+  final Widget Function(ChatUser?)? avatarBuilder;
 
   /// Should the avatar be shown for every message defaulst to false.
   final bool showAvatarForEveryMessage;
@@ -105,17 +105,17 @@ class DashChat extends StatefulWidget {
   /// [onPressAvatar] function takes a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is tapped on
-  final Function(ChatUser)? onPressAvatar;
+  final Function(ChatUser?)? onPressAvatar;
 
   /// [onLongPressAvatar] function takea a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is long pressed
-  final Function(ChatUser)? onLongPressAvatar;
+  final Function(ChatUser?)? onLongPressAvatar;
 
   /// [onLongPressMessage] function takea a function with this structure
   /// [Function(ChatMessage)] will trigger when the message
   /// is long pressed.
-  final Function(ChatMessage)? onLongPressMessage;
+  final Function(ChatMessage?)? onLongPressMessage;
 
   /// Should the messages be shown in reversed order.
   final bool inverted;
@@ -123,19 +123,19 @@ class DashChat extends StatefulWidget {
   /// messageBuilder will override the the default chat container which uses
   /// and you will need to build complete message Widget it will not accept
   /// and include any other builder functions.
-  final Widget Function(ChatMessage)? messageBuilder;
+  final Widget Function(ChatMessage?)? messageBuilder;
 
   /// messageTextBuilder will override the the default message text.
-  final Widget Function(String, [ChatMessage])? messageTextBuilder;
+  final Widget Function(String?, [ChatMessage?])? messageTextBuilder;
 
   /// messageImageBuilder will override the the default Image.
-  final Widget Function(String url, [ChatMessage])? messageImageBuilder;
+  final Widget Function(String? url, [ChatMessage?])? messageImageBuilder;
 
   /// messageTimeBuilder will override the the default text.
-  final Widget Function(String url, [ChatMessage])? messageTimeBuilder;
+  final Widget Function(String? url, [ChatMessage?])? messageTimeBuilder;
 
   /// dateBuilder will override the the default time text.
-  final Widget Function(String)? dateBuilder;
+  final Widget Function(String?)? dateBuilder;
 
   /// A Widget that will be shown below the [MessageListView] like you can
   /// show a "tying..." at the end.
@@ -198,7 +198,7 @@ class DashChat extends StatefulWidget {
 
   /// Callback method when the quickReply was tapped on
   /// will pass [Reply] as a paramter to function.
-  final Function(Reply)? onQuickReply;
+  final Function(Reply?)? onQuickReply;
 
   /// Padding for the quick reply area
   /// by default it padding is set 0.0
@@ -211,7 +211,7 @@ class DashChat extends StatefulWidget {
   final TextStyle? quickReplyTextStyle;
 
   /// quickReplyBuilder will override the the default QuickReply Widget.
-  final Widget Function(Reply)? quickReplyBuilder;
+  final Widget Function(Reply?)? quickReplyBuilder;
 
   /// Should quick reply be horizontally scrollable
   final bool quickReplyScroll;
@@ -257,7 +257,7 @@ class DashChat extends StatefulWidget {
   /// [messageButtonsBuilder] function takes a function with this
   /// structure [List<Widget> Function()] to render the buttons inside
   /// a row.
-  final List<Widget> Function(ChatMessage)? messageButtonsBuilder;
+  final List<Widget> Function(ChatMessage?)? messageButtonsBuilder;
 
   /// Padding of the message
   /// Default to EdgeInsets.all(8.0)
@@ -277,7 +277,7 @@ class DashChat extends StatefulWidget {
   /// can be used to override color, or customise the message container
   /// params [ChatMessage] and [isUser]: boolean
   /// return BoxDecoration
-  final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
+  final BoxDecoration Function(ChatMessage?, bool?)? messageDecorationBuilder;
 
   ScrollToBottomStyle? scrollToBottomStyle;
 
