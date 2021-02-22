@@ -1,13 +1,13 @@
 part of dash_chat;
 
 class _JumpingDot extends AnimatedWidget {
-  final Color color;
-  final double fontSize;
-  _JumpingDot({Key key, Animation<double> animation, this.color, this.fontSize})
+  final Color? color;
+  final double? fontSize;
+  _JumpingDot({Key? key, required Animation<double> animation, this.color, this.fontSize})
       : super(key: key, listenable: animation);
 
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
+    final Animation<double> animation = listenable as Animation<double>;
     return Container(
       height: animation.value,
       child: Text(
@@ -47,11 +47,11 @@ class JumpingDotsProgressIndicator extends StatefulWidget {
 
 class _JumpingDotsProgressIndicatorState
     extends State<JumpingDotsProgressIndicator> with TickerProviderStateMixin {
-  int numberOfDots;
-  int milliseconds;
-  double fontSize;
-  double dotSpacing;
-  Color color;
+  int? numberOfDots;
+  int? milliseconds;
+  double? fontSize;
+  double? dotSpacing;
+  Color? color;
   List<AnimationController> controllers = new List<AnimationController>();
   List<Animation<double>> animations = new List<Animation<double>>();
   List<Widget> _widgets = new List<Widget>();
@@ -66,7 +66,7 @@ class _JumpingDotsProgressIndicatorState
 
   initState() {
     super.initState();
-    for (int i = 0; i < numberOfDots; i++) {
+    for (int i = 0; i < numberOfDots!; i++) {
       _addAnimationControllers();
       _buildAnimations(i);
       _addListOfDots(i);
@@ -77,12 +77,12 @@ class _JumpingDotsProgressIndicatorState
 
   void _addAnimationControllers() {
     controllers.add(AnimationController(
-        duration: Duration(milliseconds: milliseconds), vsync: this));
+        duration: Duration(milliseconds: milliseconds!), vsync: this));
   }
 
   void _addListOfDots(int index) {
     _widgets.add(Padding(
-      padding: EdgeInsets.only(right: dotSpacing),
+      padding: EdgeInsets.only(right: dotSpacing!),
       child: _JumpingDot(
         animation: animations[index],
         fontSize: fontSize,
@@ -98,12 +98,12 @@ class _JumpingDotsProgressIndicatorState
           ..addStatusListener((AnimationStatus status) {
             if (status == AnimationStatus.completed)
               controllers[index].reverse();
-            if (index == numberOfDots - 1 &&
+            if (index == numberOfDots! - 1 &&
                 status == AnimationStatus.dismissed) {
               controllers[0].forward();
             }
             if (animations[index].value > widget.endTweenValue / 2 &&
-                index < numberOfDots - 1) {
+                index < numberOfDots! - 1) {
               controllers[index + 1].forward();
             }
           }));
@@ -120,7 +120,7 @@ class _JumpingDotsProgressIndicatorState
   }
 
   dispose() {
-    for (int i = 0; i < numberOfDots; i++) controllers[i].dispose();
+    for (int i = 0; i < numberOfDots!; i++) controllers[i].dispose();
     super.dispose();
   }
 }
