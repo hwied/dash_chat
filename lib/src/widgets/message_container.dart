@@ -33,8 +33,6 @@ class MessageContainer extends StatelessWidget {
   /// takes [BoxDecoration]
   final BoxDecoration messageContainerDecoration;
 
-  final int typingMsPerChar;
-
   /// Used to parse text to make it linkified text uses
   /// [flutter_parsed_text](https://pub.dev/packages/flutter_parsed_text)
   /// takes a list of [MatchText] in order to parse Email, phone, links
@@ -71,6 +69,8 @@ class MessageContainer extends StatelessWidget {
   /// return BoxDecoration
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
 
+  final Widget loadingWidget;
+
   const MessageContainer({
     @required this.message,
     @required this.timeFormat,
@@ -80,10 +80,29 @@ class MessageContainer extends StatelessWidget {
     this.messageTextBuilder,
     this.messageTimeBuilder,
     this.messageContainerDecoration,
-    this.typingMsPerChar = 10,
     this.parsePatterns = const <MatchText>[],
     this.textBeforeImage = true,
     this.isUser,
+    this.messageButtonsBuilder,
+    this.buttons,
+    this.messagePadding = const EdgeInsets.all(8.0),
+    this.messageDecorationBuilder,
+    this.loadingWidget
+  });
+
+  const MessageContainer.loading({
+    @required this.loadingWidget,
+    this.isUser=false,
+    this.message,
+    this.timeFormat,
+    this.noTimeStamp = false,
+    this.constraints,
+    this.messageImageBuilder,
+    this.messageTextBuilder,
+    this.messageTimeBuilder,
+    this.messageContainerDecoration,
+    this.parsePatterns = const <MatchText>[],
+    this.textBeforeImage = true,
     this.messageButtonsBuilder,
     this.buttons,
     this.messagePadding = const EdgeInsets.all(8.0),
@@ -172,19 +191,12 @@ class MessageContainer extends StatelessWidget {
           bottom: 5.0,
         ),
         padding: messagePadding,
-        child: FutureBuilder(
-          future: Future.delayed(Duration(milliseconds: msPerChar * message.text.length)),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done)
-              return JumpingDotsProgressIndicator();
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment:
-                  isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: messageWidgets
-              );
-            }
-          )
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment:
+              isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: loadingWidget == null ? messageWidgets : [loadingWidget]
+        )
       ),
     );
   }

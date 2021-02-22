@@ -1,4 +1,4 @@
-part of dash_chat
+part of dash_chat;
 
 class _JumpingDot extends AnimatedWidget {
   final Color color;

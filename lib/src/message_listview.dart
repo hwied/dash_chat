@@ -38,6 +38,7 @@ class MessageListView extends StatefulWidget {
   final bool textBeforeImage;
   final double avatarMaxSize;
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
+  final Widget loadingWidget;
 
   MessageListView(
       {this.showLoadEarlierWidget,
@@ -78,6 +79,7 @@ class MessageListView extends StatefulWidget {
       this.messagePadding = const EdgeInsets.all(8.0),
       this.textBeforeImage = true,
       this.messageDecorationBuilder,
+      this.loadingWidget
       });
 
   @override
@@ -269,7 +271,38 @@ class _MessageListViewState extends State<MessageListView> {
                                                         widget.user.uid
                                                     ? AlignmentDirectional.centerEnd
                                                     : AlignmentDirectional.centerStart,
-                                            child: MessageContainer(
+                                            child: widget.messages[i].isLoadingMessage ?
+                                            MessageContainer.loading(
+                                              loadingWidget: widget.loadingWidget,
+                                              messagePadding:
+                                              widget.messagePadding,
+                                              constraints: constraints,
+                                              isUser:
+                                              widget.messages[i].user.uid ==
+                                                  widget.user.uid,
+                                              message: widget.messages[i],
+                                              timeFormat: widget.timeFormat,
+                                              noTimeStamp: widget.noTimeStamp,
+                                              messageImageBuilder:
+                                              widget.messageImageBuilder,
+                                              messageTextBuilder:
+                                              widget.messageTextBuilder,
+                                              messageTimeBuilder:
+                                              widget.messageTimeBuilder,
+                                              messageContainerDecoration: widget
+                                                  .messageContainerDecoration,
+                                              parsePatterns:
+                                              widget.parsePatterns,
+                                              buttons:
+                                              widget.messages[i].buttons,
+                                              messageButtonsBuilder:
+                                              widget.messageButtonsBuilder,
+                                              textBeforeImage:
+                                              widget.textBeforeImage,
+                                              messageDecorationBuilder:
+                                              widget.messageDecorationBuilder,
+                                            ) :
+                                            MessageContainer(
                                               messagePadding:
                                                   widget.messagePadding,
                                               constraints: constraints,

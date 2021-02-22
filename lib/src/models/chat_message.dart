@@ -41,6 +41,8 @@ class ChatMessage {
   /// actions in message container.
   List<Widget> buttons;
 
+  bool isLoadingMessage=false;
+
   ChatMessage({
     String id,
     @required this.text,
@@ -59,6 +61,21 @@ class ChatMessage {
         : messageIdGenerator != null
             ? messageIdGenerator()
             : Uuid().v4().toString();
+  }
+
+  ChatMessage.loading({String id,
+    @required this.user,
+    String Function() messageIdGenerator,
+    DateTime createdAt,
+  }) {
+    this.text = "";
+    this.isLoadingMessage=true;
+    this.createdAt = createdAt != null ? createdAt : DateTime.now();
+    this.id = id != null
+        ? id
+        : messageIdGenerator != null
+        ? messageIdGenerator()
+        : Uuid().v4().toString();
   }
 
   ChatMessage.fromJson(Map<dynamic, dynamic> json) {

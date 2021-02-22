@@ -281,6 +281,8 @@ class DashChat extends StatefulWidget {
 
   ScrollToBottomStyle scrollToBottomStyle;
 
+  final loadingWidget;
+
   DashChat({
     Key key,
     ScrollToBottomStyle scrollToBottomStyle,
@@ -360,6 +362,7 @@ class DashChat extends StatefulWidget {
     this.messagePadding = const EdgeInsets.all(8.0),
     this.textBeforeImage = true,
     this.messageDecorationBuilder,
+    this.loadingWidget
   }) : super(key: key) {
     this.scrollToBottomStyle = scrollToBottomStyle ?? new ScrollToBottomStyle();
   }
@@ -526,7 +529,8 @@ class DashChatState extends State<DashChat> {
                     visible: visible,
                     showLoadMore: showLoadMore,
                     messageButtonsBuilder: widget.messageButtonsBuilder,
-                    messageDecorationBuilder: widget.messageDecorationBuilder
+                    messageDecorationBuilder: widget.messageDecorationBuilder,
+                    loadingWidget: widget.loadingWidget,
                   ),
                   if (widget.messages.length != 0 &&
                       widget.messages.last.user.uid != widget.user.uid &&
